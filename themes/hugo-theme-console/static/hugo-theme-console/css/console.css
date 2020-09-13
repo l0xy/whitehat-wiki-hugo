@@ -50,11 +50,61 @@
     }
 }
 
+.no-margin {
+  margin: 0px;
+}
 
+li>p {
+  margin: 0 0.5em;
+}
+
+.container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 3px 1fr;
+  grid-template-rows: 0.3fr 0.6fr 3.9fr 0.2fr;
+  grid-template-areas:
+    "logo logo logo nav"
+    "titlebox titlebox titlebox spacer"
+    "main main main sidebar"
+    "footer footer footer footer";
+  grid-gap: 0.4rem;
+}
+
+main {
+  background: blue;
+  grid-area: main;
+}
+/* .content, .middlebox,.terminal-nav { */
+/* 	display: grid; */
+/* 	grid-template-columns: 3fr 1fr; */
+/* } */
+
+.header-left {
+  grid-area: logo;
+  background: cyan;
+  width: 100%;
+}
+.header-right {
+  grid-area: nav;
+  background: pink;
+  width: 100%;
+}
+.sidebar {
+  grid-area: sidebar;
+  background: orange;
+  width: 100%;
+}
+.content-title {
+  grid-area: titlebox;
+  background: purple;
+  width: 100%;
+}
 .sidebar-heading {
     text-transform: none;
     letter-spacing: 0;
-    font-weight: 400;
+    grid-area: spacer;
+    background: purple;
 }
 
 .box-masonry .box-masonry-image {
@@ -146,6 +196,7 @@ strong {
 }
 
 .logo {
+    grid-area: logo;
     font-weight: normal;
 }
 
@@ -161,6 +212,7 @@ figure {
 }
 
 .footer {
+    grid-area: footer;
     clear: both;
     margin-top: 100px;
     padding-top: 10px;;
@@ -197,6 +249,7 @@ figure {
     position: relative;
     padding-left: 150px;
     top: 0;
+    display: block;
     margin-top: 21px;
 }
 
@@ -216,28 +269,8 @@ figure {
 }
 
 @media only screen and (max-width: 850px) {
-    .site-name {
-        width: 2ch;
-        overflow: hidden;
-        display: inline-block;
-    }
-
-    .terminal-nav {
-        align-items: flex-start;
-        flex-direction: column;
-        display: flex;
-    }
-
-    .terminal-menu ul {
-        align-items: flex-start;
-        display: flex;
-        flex-direction: row;
-        justify-content: left;
-        margin-top: 0;
-    }
-
-    .terminal-menu li {
-        margin-right: 20px;
+    .content {
+      display: block;
     }
 
     .logo {
@@ -255,7 +288,7 @@ figure {
         position: relative;
         padding-left: 0;
         top: 0;
-        margin-top: 21px;
+        padding-top: 1.2rem;
     }
 
     .post h1 {
@@ -277,6 +310,5 @@ figure {
 
     .footer {
         margin-top: 50px;
-        padding-top: 5px;;
+        padding-top: 5px;
     }
-}

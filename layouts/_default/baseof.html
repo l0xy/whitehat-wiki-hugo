@@ -8,10 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
     <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@master/devicon.min.css">
     <link rel="stylesheet" href="{{ "hugo-theme-console/css/terminal-0.7.1.min.css" | absURL }}">
-    <link rel="stylesheet" href="{{ "hugo-theme-console/css/l0xy.css" | absURL }}">
     <link rel="stylesheet" href="{{ "hugo-theme-console/css/animate-3.7.2.min.css" | absURL }}">
     <link rel="stylesheet" href="{{ "hugo-theme-console/css/console.css" | absURL }}">
+    <link rel="stylesheet" href="{{ "hugo-theme-console/css/l0xy.css" | absURL }}">
     {{ `
       <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -29,33 +30,25 @@
 
     {{- partial "header.html" . -}}
 </head>
+
 <body class="terminal">
     <div class="container">
-        <div class="terminal-nav">
-          <div id="site-logo">
-          <header class="terminal-logo">
-            <div class="logo terminal-prompt">
-              {{ $url := replace .Permalink ( printf "%s" .Site.BaseURL) "" }}
-              {{ $.Scratch.Add "path" .Site.BaseURL }}
-              <a href="{{ .Site.BaseURL }}" class="no-style {{ with .Site.Params.TitleCutting }}site-name{{ end }}">{{ .Site.Title }}</a>:~# 
-              {{ range $index, $element := split $url "/" }}{{ $.Scratch.Add "path" $element }}{{ if ne $element "" }}<a href='{{ $.Scratch.Get "path" | absURL }}'>{{ . }}</a>/{{ $.Scratch.Add "path" "/" }}{{ end }}{{ end }}</div></header>
-          <div id="site-nav">
-          <nav class="terminal-menu">
-            <ul vocab="https://schema.org/" typeof="BreadcrumbList">
-                {{ range .Site.Params.navlinks }}
-                <li><a href="{{ absURL .url }}" typeof="ListItem">{{ .name }}</a></li>
-                {{ end }}
-            </ul>
-          </nav>
-          </div>
+      {{ partial "site-logo.html" . }}
+      {{ partial "site-nav.html" . }}
 
-    <div class="animated zoomIn fast">
+      <!-- the only CSS grid elements which *must* be -->
+      <!-- definied in the main block to render properly-->
+      <!-- are #page-header & <main></main> -->
       {{ block "main" . }}
       {{ end }}
-    </div>
-    <div id="footer">
+
+      <div id="sidebar-spacer"></div>
+      <div id="sidebar">
+        {{ partial "site_tags.html" . }}
+      </div>
+
       {{ partial "footer.html" . }}
+
     </div>
-  </div>
-  </body>
+</body>
 </html>

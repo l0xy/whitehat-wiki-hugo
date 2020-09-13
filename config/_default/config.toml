@@ -6,6 +6,7 @@ languageCode = "en-us"
 [params]
   # Cutting off the page title to two chars for mobile (console-demo -> co)
   titleCutting = true
+  numberOfTagsShown = 14 # Applies for all other default & custom taxonomies. e.g categories
 
   [[params.navlinks]]
   name = "about/"
@@ -18,6 +19,24 @@ languageCode = "en-us"
   [[params.navlinks]]
   name = "code/"
   url = "code/"
+
+[taxonomies]
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS" ]
+
+[markup]
+  [markup.highlight]
+    codeFences = false
+    guessSyntax = false
+    hl_Lines = ""
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = true
+    style = "monokailight"
+    tabWidth = 4
 
 [deployment]
 

@@ -1,0 +1,83 @@
++++
+title = "cmdb"
+tags = ['cli-tool']
+description = "networked tool to save and fetch your saved commands"
++++
+
+= Section1
+on URLs are of particular interest to me because they have the fascinating quality of being largely "random". In other words, bitflipping attacks do not result from unpatched software or misconfigured settings, but rather are a natural consequence of computers operating perfectly normally otherwise. For this reason, they pose a serious risk to organizations whose security posture is otherwise exceptional.
+
+{{< highlight css >}}
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: var(--block-background-color);
+  color: var(--font-color);
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: var(--secondary-color);
+}
+
+.hljs-variable {
+    color: var(--font-color);
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
+  color: var(--primary-color);
+}
+
+.hljs-string,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-literal,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-addition {
+  color: var(--secondary-color);
+}
+
+.hljs-string {
+    color: var(--secondary-color);
+}
+
+.hljs-deletion,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-meta {
+  color: var(--primary-color);
+}
+
+.hljs-doctag {
+  color: var(--secondary-color);
+}
+
+.hljs-attr {
+  color: var(--primary-color);
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link {
+  color: var(--primary-color);
+}
+
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+{{< / highlight >}}
+
+<!--more-->
