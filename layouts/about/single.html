@@ -6,6 +6,7 @@
 <main>
 <article>
 {{ .Content }}
+{{ partial "certifications.html" . }}
 </article>
 </main>
 {{ end }}
@@ -13,5 +14,4 @@
 
 {{ define "sidebar" }}
 {{ partial "contact-info.html" }}
-{{ partial "certifications.html" . }}
 {{ end }}

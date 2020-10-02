@@ -20,3 +20,9 @@
 
 </main>
 {{ end }}
+
+{{ define "sidebar" }}
+{{ with .GetPage "/posts" }}
+{{ partial "type-tags.html" . }}
+{{ end }}
+{{ end }}
