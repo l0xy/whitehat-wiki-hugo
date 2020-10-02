@@ -106,11 +106,11 @@ li.icon-as-bullet::after {
 }
 
 .contact-info {
-  padding-top: 1.2em;
+  padding-top: var(--global-line-height);
 }
 
 article {
-  padding-top: 1.2em;
+  padding-top: var(--global-line-height);
 }
 
 #footer .icon {
@@ -172,7 +172,7 @@ article {
     padding-top: 3px;
 }
 
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 600px) {
   .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
