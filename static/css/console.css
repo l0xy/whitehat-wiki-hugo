@@ -151,10 +151,6 @@ strong {
     font-weight: normal;
 }
 
-.terminal-menu li {
-    margin-right: 30px;
-}
-
 figure {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -219,10 +215,12 @@ figure {
       display: block;
     }
 
-    .logo {
+    .logo, .terminal-menu {
         padding: calc(var(--global-space) * 1) 0 calc(var(--global-space) * 1);
     }
-
+    .terminal-menu ul {
+      margin:0;
+    }
     figure {
         margin-top: 5px;
         margin-bottom: 5px;
