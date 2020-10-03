@@ -7,18 +7,16 @@
 </div>
 
 <main>
-	<div class="posts-list">
+	<div class="projects-list">
 	{{ range sort .Data.Pages "Date" "desc" }}
 
 		{{ if not .Params.private }}
-			<div class="post">
 				<div class="project-name">
 					<a href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a>
 				</div>
 				<div class="project-description">
 				{{ .Description }}
 				</div>
-			</div>
 		{{ end }}
 
 	{{ end }}

@@ -199,17 +199,6 @@ figure {
     padding-top: 0;
 }
 
-.posts-list .date {
-    display: inline-block;
-    position: absolute;
-    left: 0px;
-    width: 150px;
-    height: 100%;
-    z-index: 400;
-    font-weight: bold;
-    padding-top: 3px;
-}
-
 @media only screen and (max-width: 600px) {
     .content {
       display: block;

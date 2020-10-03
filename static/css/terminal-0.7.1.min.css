@@ -294,9 +294,9 @@ ol ol {
   margin-top: 0;
   margin-bottom: 0;
 }
-.terminal-menu {
-  width: 100%;
-}
+/* .terminal-menu { */
+/*   width: 100%; */
+/* } */
 .terminal-nav {
   display: flex;
   flex-direction: column;
@@ -374,9 +374,6 @@ hr {
 p {
   margin: 0 0 var(--global-line-height);
   color: var(--global-font-color);
-}
-.container {
-  max-width: 1000px;
 }
 .container,
 .container-fluid {
