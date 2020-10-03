@@ -1,6 +1,5 @@
 baseurl = "https://l0xy.sh"
 title = "l0xy"
-theme = "hugo-theme-console"
 staticDir = [ "static" ]
 languageCode = "en-us"
 
