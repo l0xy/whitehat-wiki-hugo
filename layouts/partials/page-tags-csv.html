@@ -1,6 +1,0 @@
-<div class="post-tags">
-    {{- range $index, $tag := (.GetTerms "tags") }}
-      {{- if gt $index 0 }}, {{ end -}}
-        <a href="{{ .Permalink }}">#{{ ( replace .Name " " "-" ) }}</a></li>
-    {{- end -}}
-</div>

@@ -1,18 +1,16 @@
-{{ define "main" }}
-
-<div id="page-header">
+{{ define "page-header" }}
 <h1 class="post-title">{{ .Title }}</h1>
-{{ partial "post-metadata.html" . }}
-</div>
+{{ partial "post_metadata.html" . }}
+{{ end }}
 
-<main>
+
+{{ define "main" }}
 <article>
 {{ .Content }}
 </article>
-</main>
-
 {{ end }}
 
+
 {{ define "sidebar" }}
-{{ partial "type-tags.html" . }}
+{{ partial "tags/local/block.html" . }}
 {{ end }}

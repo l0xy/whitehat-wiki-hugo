@@ -1,5 +1,5 @@
-{{ if len .Params | eq 2 }}
-<img class="icon" src="/images/icons/{{ .Get 0 }}" alt="">{{ .Get 1 }}
+{{ if .IsNamedParams }}
+<img class="icon" src="/image/icon/{{.Get "src" }}.svg" alt="">
 {{ else }}
-<img class="icon" src="/images/icons/{{ .Get 0}}" alt="">
+<img class="icon" src="/image/icon/{{.Get 0}}.svg" alt="">
 {{ end }}

@@ -1,18 +1,13 @@
-{{ define "main" }}
-<div id="page-header">
-<h1>{{ .Title }}</h1>
-<br>
-</div>
-
-<main>
-<article>
-{{ .Content }}
-{{ partial "certifications.html" . }}
-</article>
-</main>
+{{ define "page-header" }}
+<h1>{{ .Title }}</h1><br>
 {{ end }}
 
+{{ define "main" }}
+<br>
+{{ .Content }}
+{{ partial "certifications.html" . }}
+{{ end }}
 
 {{ define "sidebar" }}
-{{ partial "contact-info.html" }}
+{{ partial "contact.html" }}
 {{ end }}

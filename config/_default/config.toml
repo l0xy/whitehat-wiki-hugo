@@ -1,4 +1,4 @@
-baseurl = "https://l0xy.sh"
+baseurl = "https://l0xy.sh/"
 title = "l0xy"
 staticDir = [ "static" ]
 languageCode = "en-us"

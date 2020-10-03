@@ -1,5 +1,0 @@
-{{ if .IsNamedParams }}
-<img class="icon" src="/images/icons/{{.Get "src" }}" alt="">
-{{ else }}
-<img class="icon" src="/images/icons/{{ index .Params 0}}" alt="">
-{{ end }}

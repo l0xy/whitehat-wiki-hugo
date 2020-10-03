@@ -1,26 +1,23 @@
+{{ define "page-header" }}
+<h1>{{ .Page.Title }}</h1><br>
+{{ .Content }}
+{{ end }}
+
+
 {{ define "main" }}
-
-<div id="page-header">
-	<h1>{{ .Page.Title }}</h1>
-	<br>
-	{{ .Content }}
-</div>
-
-<main>
-	<div class="page-list">
-		<ul class="icon-as-bullet">
+<div class="page-list">
+	<ul class="icon-as-bullet">
 		{{ range .Pages }}
-			<li class="icon-as-bullet">
-				<img class="file-icon" src="/image/icon/file/{{ .Type }}.svg" onerror="this.src='/image/icon/file/page.svg'"/>
-				<a href="{{.Permalink}}">{{.LinkTitle}}</a>
-			</li>
+		<li class="icon-as-bullet">
+			<img class="file-icon" src="/image/icon/file/{{ .Type }}.svg" onerror="this.src='/image/icon/file/page.svg'"/>
+			<a href="{{.Permalink}}">{{.LinkTitle}}</a>
+		</li>
 		{{ end }}
-	</div>
-</main>
-
+	</ul>
+</div>
 {{ end }}
 
 
 {{ define "sidebar" }}
-{{ partial "site-tags.html" . }}
+{{ partial "tags/global/block.html" . }}
 {{ end }}
