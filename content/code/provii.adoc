@@ -1,10 +1,11 @@
 ---
-title: "provii"
-url: /code/provii
+title: provii
+github: l0xy/provii
 description: in-memory downloader for binary command-line utilities
 tags:
 - 'sh'
-- 'cli-tool'
+- 'cli_tool'
+- 'shell'
 ---
 
 = provii

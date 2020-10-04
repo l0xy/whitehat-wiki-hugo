@@ -1,6 +1,7 @@
 {{ define "page-header" }}
-<h1>#{{ .Page.Title }}</h1><br>
+<h1>#{{ .Page.Title }}</h1>
 {{ .Content }}
+<div class="header-spacer"></div>
 {{ end }}
 
 
@@ -9,8 +10,10 @@
 	<ul class="icon-as-bullet">
 		{{ range .Pages }}
 		<li class="icon-as-bullet">
-			<img class="file-icon" src="/image/icon/file/{{ .Type }}.svg" onerror="this.src='/image/icon/file/page.svg'"/>
-			<a href="{{.Permalink}}">{{.LinkTitle}}</a>
+			<a href="{{.Permalink}}">
+				<img class="file-icon" src="/image/icon/file/{{ .Type }}.svg" onerror="this.src='/image/icon/file/page.svg'"/>
+				{{.LinkTitle}}
+			</a>
 		</li>
 		{{ end }}
 	</ul>

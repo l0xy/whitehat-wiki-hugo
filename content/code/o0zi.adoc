@@ -1,8 +1,13 @@
-+++
-title = "o0zi"
-tags = ['cli-tool', 'toolset']
-description = "version of Fedora provisoned for terminal-based workflows"
-+++
+---
+title: o0zi
+github: l0xy/o0zi
+description: "version of Fedora provisoned for terminal-based workflows"
+tags:
+- 'sh'
+- 'linux'
+- 'vagrant'
+- 'cli_tool'
+---
 
 = o0zi
 
