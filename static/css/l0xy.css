@@ -190,8 +190,8 @@ article {
 .posts-list {
   padding-top: var(--global-line-height);
   display: grid;
-  grid-template-columns: max-content minmax(1em,1fr)  15fr ;
-  grid-template-rows: repeat(4, max-content);
+  grid-template-columns: max-content minmax(1em,1fr)  12fr;
+  grid-template-rows: auto;
 }
 
 .post-spacer,
@@ -199,8 +199,8 @@ article {
   grid-column: 2;
 }
 
-.projects-list .project-name,
-.posts-list .date {
+.projects-list>.project-name,
+.posts-list>.date {
     grid-column:1;
     font-weight: bold;
 }
@@ -216,15 +216,16 @@ article {
   .container {
     display: grid;
     grid-template-columns: 2.5fr 1.5fr;
-    grid-template-rows: 1fr 1fr 0px auto auto 0.5fr;
-    grid-template-areas: "logo nav" "titlebox titlebox" "spacer spacer" "content content" "sidebar sidebar" "footer footer";
-    grid-gap: 0 1rem;
+    grid-template-rows: 1fr 1fr auto minmax(3em,1fr) minmax(max-content,1fr) minmax(max-content,1fr);
+    grid-template-areas: "logo nav" "titlebox titlebox" "content content" "spacer spacer" "sidebar sidebar" "footer footer";
+    grid-row-gap: 1rem;
+  }
+  #footer {
+    align-self: end;
   }
   .posts-list {
-    padding-top: var(--global-line-height);
-    display: grid;
-    grid-template-columns: 1fr ;
-    grid-template-rows: repeat(3, max-content);
+    grid-template-columns: 0 0 1fr ;
+    grid-gap: 2em 0;
   }
   .posts-list {
       padding: 0;
@@ -232,6 +233,14 @@ article {
   }
   .post {
       padding: 0;
+  }
+  #sidebar .tags-nav>ul {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+  }
+  #sidebar .tags-nav>ul>li {
+    padding: 0 0.5em;
   }
   .sidebar {
     max-width: none;
@@ -264,10 +273,6 @@ article {
 
 #sidebar {
   grid-area: sidebar;
-  /* without the max-with the sidebar and right-top nav */
-  /*   will stretch to be more than 25% of the container */
-  /*   and I haven't found a nicer solution, so.. */ 
-  max-width: 250px;
   background: var(--sidebar-test);
 }
 
@@ -370,6 +375,21 @@ article {
   }
   #page-header > .header-spacer {
     padding: 0;
+  }
+
+  .projects-list {
+    display: block;
+  }
+  .project-name {
+    display: inline-block;
+  }
+  .project-description {
+    display: contents;
+  }
+  .project-spacer {
+    display: block;
+    margin-top: 1em;
+  }
 }
 
 @media only screen and (min-width: 450px) {
