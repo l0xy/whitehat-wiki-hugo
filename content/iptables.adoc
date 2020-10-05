@@ -1,0 +1,78 @@
+---
+title: iptables
+tags:
+ - linux
+ - network
+ - firewall
+ - nat
+---
+
+What can I do with netfilter/iptables?
+
+- build internet [.term]*firewalls* based on stateless and stateful packet filtering
+- deploy highly available stateless and stateful [.term]*firewall clusters*
+- use [.term]*NAT* and [.term]*masquerading* for sharing internet access if you don't have enough public IP addresses
+- use NAT to implement [.term]*transparent proxies*
+- aid the [.txt]`tc` and link:/iproute2[iproute2] systems used to build sophisticated [.term]*QoS & policy routers*
+- do further [.term]*packet manipulation (mangling)* like altering the TOS/DSCP/ECN bits of the IP header
+
+
+== netfilter
+
+[.term]*netfilter* is the kernel-space code associated with the user-space command [.cmd]`iptables`. Knowing anything more about netfilter than that is unnecssary unless you want to develop <<linux#kernel_modules,kernel modules>> or something.
+
+== iptables
+
+- https://www.booleanworld.com/depth-guide-iptables-linux-firewall[in depth guide to iptables]
+
+[.cmd]`iptables` is the userspace command line program used to configure the Linux 2.4.x and later packet filtering ruleset. It is targeted towards system administrators.
+
+main [.cmd]`iptables` features:
+
+- listing the contents of the packet filter ruleset
+- adding/removing/modifying rules in the packet filter ruleset
+- listing/zeroing per-rule counters of the packet filter ruleset
+
+=== port knocking
+
+- https://www.digitalocean.com/community/tutorials/how-to-configure-port-knocking-using-only-iptables-on-an-ubuntu-vps
+- https://www.cipherdyne.org/fwknop[fwknop] - nextgen port knocking solution
+
+=== NAT
+
+See https://www.revsys.com/writings/quicktips/nat.html[here]
+
+[source, bash]
+----
+# echo 1 > /proc/sys/net/ipv4/ip_forward`
+# iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE`
+# iptables -A FORWARD -i eth1 -o eth0 -j ACCEPT`
+# iptables -A FORWARD -i eth0 -o eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT`
+----
+
+ You will need to edit [.path]`/etc/sysctl.conf` and change the line that says [.txt]`net.ipv4.ip_forward = 0` to [.txt]`net.ipv4.ip_forward = 1`. Notice how this is similar to step number one? This essentially tells your kernel to do step one on boot.
+
+Ok last step for Fedora/RHEL users. In order for your system to save the iptables rules we setup in step two you have to configure iptables correctly. You will need to edit [.path]`/etc/sysconfig/iptables-config` and make sure [.txt]`IPTABLES_MODULES_UNLOAD`, [.txt]`IPTABLES_SAVE_ON_STOP`, and [.txt]`IPTABLES_SAVE_ON_RESTART` are all set to 'yes'. 
+
+
+FROM THE IPTABLES NAT-HOWTO:
+[quote]
+----
+I just want masquerading! Help!
+
+This is what most people want. If you have a dynamically allocated IP PPP dialup (if you don't know, this is you), you simply want to tell your box that all packets coming from your internal network should be made to look like they are coming from the PPP dialup box.
+----
+
+[source]
+----
+# Load the NAT module (this pulls in all the others).
+modprobe iptable_nat
+
+# In the NAT table (-t nat), Append a rule (-A) after routing
+# (POSTROUTING) for all packets going out ppp0 (-o ppp0) which says to
+# MASQUERADE the connection (-j MASQUERADE).
+iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
+
+# Turn on IP forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+----

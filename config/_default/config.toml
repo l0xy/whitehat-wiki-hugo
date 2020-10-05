@@ -1,5 +1,5 @@
-baseurl = "https://l0xy.sh/"
-title = "l0xy"
+baseurl = "https://whitehat.wiki/"
+title = "the whitehat wiki"
 staticDir = [ "static" ]
 languageCode = "en-us"
 
@@ -9,17 +9,16 @@ languageCode = "en-us"
   numberOfTagsShown = 14 # Applies for all other default & custom taxonomies. e.g categories
 
   [[params.navlinks]]
-  name = "about/"
-  url = "about/"
-
-  [[params.navlinks]]
-  name = "posts/"
-  url = "posts/"
+  name = "pages/"
+  url = "pages/"
   
   [[params.navlinks]]
-  name = "code/"
-  url = "code/"
+  name = "tags/"
+  url = "tags/"
 
+  [[params.navlinks]]
+  name = "about/"
+  url = "about/"
 
 [taxonomies]
   tag = "tags"
@@ -39,35 +38,43 @@ languageCode = "en-us"
     style = "monokailight"
     tabWidth = 4
 
-[deployment]
+[markup.asciidoctorext]
+  extensions = ["asciidoctor-html5s", "asciidoctor-rouge", "asciidoctor-diagram"]
+  workingFolderCurrent = true
+  [markup.asciidocext.attributes]
+      my-base-url = "https://example.com/"
+      my-attribute-name = "my value"
+      source-highlighter = "rouge"
+      rouge-theme = "monokai"
+#[deployment]
 
-  [[deployment.targets]]
-  name = "spensaer@aws"
+#  [[deployment.targets]]
+#  name = "spensaer@aws"
   
-  # S3; see https://gocloud.dev/howto/blob/#s3
-  # For S3-compatible endpoints, see https://gocloud.dev/howto/blob/#s3-compatible
-  URL = "s3://l0xy.sh?region=us-east-1"
+#  # S3; see https://gocloud.dev/howto/blob/#s3
+#  # For S3-compatible endpoints, see https://gocloud.dev/howto/blob/#s3-compatible
+#  URL = "s3://l0xy.sh?region=us-east-1"
   
-  # If you are using a CloudFront CDN, deploy will invalidate the cache as needed.
-  cloudFrontDistributionID = "E2GWR9WPDNIFTI"
+#  # If you are using a CloudFront CDN, deploy will invalidate the cache as needed.
+#  cloudFrontDistributionID = "E2GWR9WPDNIFTI"
   
-  # Optionally, you can include or exclude specific files.
-  # See https://godoc.org/github.com/gobwas/glob#Glob for the glob pattern syntax.
-  # If non-empty, the pattern is matched against the local path.
-  # All paths are matched against in their filepath.ToSlash form.
-  # If exclude is non-empty, and a local or remote file's path matches it, that file is not synced.
-  # If include is non-empty, and a local or remote file's path does not match it, that file is not synced.
-  # As a result, local files that don't pass the include/exclude filters are not uploaded to remote,
-  # and remote files that don't pass the include/exclude filters are not deleted.
-  # include = "**.html" # would only include files with ".html" suffix
-  # exclude = "**.{jpg, png}" # would exclude files with ".jpg" or ".png" suffix
+#  # Optionally, you can include or exclude specific files.
+#  # See https://godoc.org/github.com/gobwas/glob#Glob for the glob pattern syntax.
+#  # If non-empty, the pattern is matched against the local path.
+#  # All paths are matched against in their filepath.ToSlash form.
+#  # If exclude is non-empty, and a local or remote file's path matches it, that file is not synced.
+#  # If include is non-empty, and a local or remote file's path does not match it, that file is not synced.
+#  # As a result, local files that don't pass the include/exclude filters are not uploaded to remote,
+#  # and remote files that don't pass the include/exclude filters are not deleted.
+#  # include = "**.html" # would only include files with ".html" suffix
+#  # exclude = "**.{jpg, png}" # would exclude files with ".jpg" or ".png" suffix
   
   
-  # [[deployment.matchers]] configure behavior for files that match the Pattern.
-  # Samples:
+#  # [[deployment.matchers]] configure behavior for files that match the Pattern.
+#  # Samples:
   
-  [[deployment.matchers]]
-  #  Cache static assets for 1 year.
-  #pattern = "^.+\\.(js|css|svg|ttf)$"
-  #cacheControl = "max-age=31536000, no-transform, public"
-  #gzip = true
+#  [[deployment.matchers]]
+#  #  Cache static assets for 1 year.
+#  #pattern = "^.+\\.(js|css|svg|ttf)$"
+#  #cacheControl = "max-age=31536000, no-transform, public"
+#  #gzip = true

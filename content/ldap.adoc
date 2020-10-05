@@ -1,0 +1,248 @@
+---
+title: LDAP
+tags:
+ - protocol
+ - L7
+---
+
+LDAP is a protocol that defines:
+
+. The method by which directory data is accessed. 
+. How data is represented in the directory service (the Data Information Model)
+. How data is loaded (imported) into and saved (exported) from a directory service (using LDIF). 
+
+LDAP does _not_ define:
+
+. How data is stored or manipulated; data storage and access methods are automagical processes as far as the standard is concerned and are generally handled by back-end modules within any specific LDAP implementation.
+
+> A typical use case for LDAP is to offer a centralized storage of usernames and passwords. This allows various applications (or services) to connect to the LDAP server to validate users.
+
+== LDAP & X.500
+
+X.500 is a series of computer networking standards covering electronic Directory Services. The Directory Services were developed in order to support the requirements of X.400 electronic mail exchange and name lookup.
+
+The primary concept of X.500 (like LDAP) is that there is a single Directory Information Tree (DIT), a hierarchical organization of entries which are distributed across one or more servers, called Directory System Agents (DSA).
+
+LDAP was originally created to access X.500’s Directory Access Protocol (DAP) over TCP/IP. With the advent of the Internet and its reliance on TCP/IP, X.500 faded into the background (even though it was later modified for use over TCP/IP) & around that time LDAP became increasingly popular. Today LDAP is much more popular than X.500. 
+
+Although X.500 isn't of its supporting protocols remain important directory security constructs, namely the link:/X509[X.509] authentication framework that is the cornerstone of PKI-based certificates.
+
+== components
+
+=== Directory System Agent (DSA)
+The Directory System Agent (DSA), also simply called the [.term]*LDAP server* is the Protocol _Server_ which listens for LDAP Requests. There are many LDAP Server Implementations of Directory System Agent including:
+
+- Microsoft Active Directory
+- 389 Directory Server
+- OpenLDAP
+
+=== Directory Information Tree (DIT)
+
+A DIT is simply the hierarchy describing the relationship of existing entries. Upon creation, each new entry must “hook into” the existing DIT by placing itself as a child of an existing entry. This creates a tree-like structure that is used to define relationships and assign meaning.
+
+The top of the DIT is the broadest categorization under which each subsequent node is somehow descendent. Typically, the top-most entry is simply used as a label indicating the organization that the DIT is used for. These entries can be of whatever objectClasses desired, but usually they are constructed using:
+
+- domain components
+** e.g. [.txt]`dc=example,dc=com` for an LDAP managing info associated with example.com
+- locations
+** e.g. [.txt]`l=new_york,c=us` for an organization or segment in NY
+- organizational segments
+** e.g. [.txt]`ou=marketing,o=Example_Co`
+
+Each entry other than the [.term]*root entry* has exactly _one parent entry_ and may have any number of child entries beneath it.
+
+Since entries in an LDAP tree can represent just about anything, some entries will be used mainly for organizational purposes. These entries often use the [.txt]`organizationalUnit` objectClass, which allows the use of a simple descriptive attribute label called <txt>ou=<txt>.
+
+These entires with the [.txt]`organizationalUnit` objectClass are often used for the general categories under the top-level DIT entry, e.g.
+
+- [.txt]`ou=people`
+- [.txt]`ou=groups`
+- [.txt]`ou=inventory`
+
+== LDAP data components
+
+=== entry
+Each entry has a unique Distinguished Name (DN), which unambiguously identifies it from other entries in the DIT. To refer to an entry unambiguously, you use the entry’s Relative Distinguished Name (RDN) combined with all of its parent entries’ RDNs. This chain of RDNs leads back up to the top of the DIT hierarchy and provides an unambiguous path to the entry in question.
+
+- Entry
+** DN  - [.txt]`uid=john.doe,ou=People,dc=example,dc=com`
+** RDN - [.txt]`ou=People,dc=example,dc=com`
+- Parent
+** DN  - [.txt]`ou=People,dc=example,dc=com`
+** RDN - [.txt]`dc=example,dc=com`
+- Grandparent
+** DN  - [.txt]`dc=example,dc=com`
+** RDN - [.txt]`dc=com`
+ 
+Entries are composesd of named <<LDAP#attributes>> (a special attribute being objectClass). What attributes an entry may contain is determined by which objectClass(es) it has been ascribed.
+
+Below is an example of an LDAP entry:
+[source]
+----
+dn: uid=john.doe,ou=People,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: john.doe
+givenName: John
+sn: Doe
+cn: John Doe
+mail: john.doe@example.com
+userCertificate;binary:: MIIB5TCCAU6gAwIBAgIERloIajANBgkqhkiG9w0BAQUFADA3M
+ QswCQYDVQQGEwJVUzEVMBMGA1UEChMMRXhhbXBsZSBDb3JwMREwDwYDVQQDEwhKb2huIERvZT
+ AeFw0wNzA1MjcyMjM4MzRaFw0wNzA4MjUyMjM4MzRaMDcxCzAJBgNVBAYTAlVTMRUwEwYDVQQ
+ KEwxFeGFtcGxlIENvcnAxETAPBgNVBAMTCEpvaG4gRG9lMIGfMA0GCSqGSIb3DQEBAQUAA4GN
+ ADCBiQKBgQCWNZB4qs1UvjYgvGvB9udmiUi4X4DeaSm3o0p8PSwpOFxSqgWdSwKgUugZ1EJVy
+ YoakljDFsJ0GVown+dIB24V4ozNs6wa0YotIKTV2AcySQkmzzP3e+OnE9Aa1wlB/PVnh1CFLg
+ k1UOoruLE10bac5HA8QiAmfNMorU26AwFTcwIDAQABMA0GCSqGSIb3DQEBBQUAA4GBAGrzMKN
+ bBRWn+LIfYTfqKYUc258XVbhFri1OV0oF82vyvciYWZzyxLc52EPDsymLmcDh+CdWxy3bVkjd
+ Mg1WEtMGr1GsxOVi/vWe+kT4tPhinnB4Fowf8zgqiUKo9/FJN26y7Fpvy1IODiBInDrKZRvNf
+ qemCf7o3+Cp00OmF5ey
+userPassword: {SSHA}s4Bd9M0tCpRDr8/U+IXetRcAbd8bJY3AFKsn+A==
+----
+
+=== objectClass
+Each LDAP Entry in the DIT has an 'ObjectClass' attribute, which define which attributes the entry may use. Every https://www.zytrax.com/books/ldap/ch3/#objectclasses[objectClass] has a unique name and is essnetially a container for attributes. All objectClasses must be defined somewhere in a <<LDAP#schema,LDAP schema>>.
+
+There are a confusing number of pre-defined objectclasses, each of which contains bucket-loads of attributes suitable for almost all common LDAP implementations. All other objectClasses must be manually defined in an <<LDAP#schema,LDAP schema>>. So if you are creating an entry to describe a person, including  pre-defined objectClass person (or any of the more specific person objectClasses derived from person — we’ll cover this later) allows you to use all of the attributes within that objectClass:
+
+[source]
+----
+dn: . . .
+objectClass: person
+----
+
+You would then have the ability to set these attributes within the entry:
+
+- cn: Common name
+- description: Human-readable description of the entry
+- seeAlso: Reference to related entries
+- sn: Surname
+- telephoneNumber: A telephone number
+- userPassword: A password for the user
+
+=== attribute
+LDAP https://www.zytrax.com/books/ldap/ch3/#attributes[attributes] are data in entries in the form of key/value pairs. They keys of LDAP attributes are typically mnemonic strings, such as “cn” for common name, or “mail” for email address. Each attribute is assigned one or more values consisting in a space-separated list.
+
+=== schema
+A [.term]*schema* is just a file containing definitons of objectClasses & attributes that will be used in the LDAP entries that populate the <<LDAP#DIT>>, analagous to _header files_ in C/C++ source code. In contrast to traditional relational databases which are always populated with data, schemas in LDAP are simply collections of related objectClasses and attributes. A single DIT can have many different schemas so that it can create the entries and attributes it needs. Below is an excerpt from an LDAP schema:
+
+[source]
+----
+objectclass ( 2.5.6.6 NAME 'person' DESC 'RFC2256: a person' SUP top STRUCTURAL
+  MUST ( sn $ cn )
+  MAY ( userPassword $ telephoneNumber $ seeAlso $ description ) )
+
+attributetype ( 2.5.4.4 NAME ( 'sn' 'surname' )
+  DESC 'RFC2256: last (family) name(s) for which the entity is known by' SUP name )
+
+attributetype ( 2.5.4.4 NAME ( 'cn' 'commonName' )
+  DESC 'RFC4519: common name(s) for which the entity is known by' SUP name )
+----
+
+== LDIF
+[.term]*LDIF* stands for [.term]*LDAP Data Interchange Format*. It is a format not only for representing LDAP data but also a mechanism for making changes to that data.
+
+In an LDIF representation of an <<LDAP#entry,LDAP Entry>>, the first line should contain the DN of the LDAP Entry. The remaining lines of the LDIF record will represent the AttributeTypes of the LDAP Entry, with the attributeTypes used as the name. Multivalued attributes will be represented with a separate line per value. See the entry defined <<LDAP#entry,above>>.
+
+To represent an [.term]*Add Request* in LDIF using the example <<LDAP#entry,above>>, the format is exactly the same as to represent an entry, with the exception that the line immediately after the DN should indicate a "changeType" of "add", like:
+
+[source]
+----
+dn: uid=john.doe,ou=People,dc=example,dc=com
+changetype: add
+...
+----
+
+and for a [.term]*Delete Request*
+[source]
+----
+dn: uid=john.doe,ou=People,dc=example,dc=com
+changetype: delete
+...
+----
+
+The following is a simple example of an LDIF file which sets up a root DN (dc=example,dc=com) and adds a three child entries under a people entry.
+
+[source,shell]
+----
+# If not running interactively, don't do anything
+[[ -z "$PS1" ]] && return
+----
+
+[source]
+----
+version: 1
+
+## version not strictly necessary (and some implementations reject it) but generally good practice
+
+## DEFINE DIT ROOT/BASE/SUFFIX ####
+## uses RFC 2377 (domain name) format
+
+## dcObject is an AUXILIARY objectclass and MUST
+## have a STRUCTURAL objectclass (organization in this case)
+# this is an ENTRY sequence and is preceded by a BLANK line
+
+dn: dc=example,dc=com
+dc: example
+description: The best company in the whole world
+objectClass: dcObject
+objectClass: organization
+o: Example, Inc.
+
+## FIRST Level hierarchy - people 
+# this is an ENTRY sequence and is preceded by a BLANK line
+
+dn: ou=people, dc=example,dc=com
+ou: people
+description: All people in organisation
+objectClass: organizationalUnit
+
+## SECOND Level hierarchy - people entries 
+# this is an ENTRY sequence and is preceded by a BLANK line
+
+dn: cn=Robert Smith,ou=people,dc=example,dc=com
+objectclass: inetOrgPerson
+cn: Robert Smith
+cn: Robert
+sn: Smith
+uid: rsmith
+mail: robert@example.com
+mail: r.smith@example.com
+ou: sales
+
+## SECOND Level hierarchy - people entries 
+# this is an ENTRY sequence and is preceded by a BLANK line
+
+dn: cn=Bill Smith,ou=people,dc=example,dc=com
+objectclass: inetOrgPerson
+cn: Bill Smith
+cn: William
+sn: Smith
+uid: bsmith
+mail: bill@example.com
+mail: b.smith@example.com
+ou: support
+
+## SECOND Level hierarchy - people entries 
+# this is an ENTRY sequence and is preceded by a BLANK line
+
+dn: cn=John Smith,ou=people,dc=example,dc=com
+objectclass: inetOrgPerson
+cn: John Smith
+sn: smith
+uid: jsmith
+mail: jim@example.com
+mail: j.smith@example.com
+ou: accounting
+----
+
+== why use LDAP?
+So why use LDAP? Here is our list of key characteristics which make the (currently) high level of pain worthwhile.
+
+. LDAP provides a remote and local data access method that is standardized. It is thus possible to replace the LDAP implementation completely without affecting the external interface to the data. RDBMS systems mostly implement local access standards, such as SQL, but remote interfaces are always proprietary.
+. Because LDAP uses standardized data access methods, LDAP Clients and Servers may be sourced (or developed) independently. By extension of this point LDAP may be used to abstract the view of data contained in transaction oriented databases, say for the purpose of running user queries, while allowing the user to transparently (to the LDAP queries) change the transactional database supplier.
+. LDAP provides a method whereby data may be moved (delegated) to multiple locations without affecting any external access to that data. By using referral methods LDAP data can be moved to alternate LDAP servers by changing operational parameters only. Thus, it is possible to construct distributed systems, perhaps with data coming from separate autonomous organizations, while providing a single, consistent, view of the data to its users.
+. LDAP systems can be operationally configured to replicate data to one or more LDAP servers or applications without adding either code or changing the external access to that data.
+

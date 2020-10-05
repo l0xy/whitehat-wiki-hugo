@@ -1,25 +1,40 @@
 {{ define "page-header" }}
-<h1>latest posts</h1><br>
+<h1>{{ .Title | lower }}</h1>
+<div class="header-spacer"></div>
 {{ end }}
 
+
 {{ define "main" }}
+<h2>recently updated</h2>
 <div class="posts-list">
-    {{ with .Site.GetPage "/posts" }}
-    {{ range (sort .Data.Pages "Date" "desc" (where .Pages ".Params.private" "!=" true))}}
-    <div class="date">{{ .PublishDate.Format "Jan. 2, 2006" }}</div>    
-	<div class="post-spacer"></div>
-    <div class="post-info">
-        <h1><a href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a></h1>
-        {{ .Summary }}
-    </div>
+{{ range first 5 (sort .Data.Pages "PublishDate" "desc") }}
+    {{ if not .Params.private }}
+		<div class="date">{{ .PublishDate.Format "Jan. 2, 2006" }}</div>    
+		<div class="post-spacer"></div>
+		<div class="posts-info">
+            <h1><a href="{{ .Permalink }}" title="{{ .Title }}">{{ .Title }}</a></h1>
+            {{ .Summary }}
+        </div>
     {{ end }}
-    {{ end }}
+{{ end }}
 </div>
+
+<h2>all pages</h2>
+	<ul class="icon-as-bullet">
+		{{ range $.Site.RegularPages.ByDate }}
+		
+		<li class="icon-as-bullet">
+			<a href="{{.Permalink}}">
+				<img class="file-icon" src="/image/icon/file/{{ .Type }}.svg" onerror="this.src='/image/icon/file/page.svg'"/>
+				{{.LinkTitle}}
+			</a>
+		</li>
+		{{ end }}
+	</ul>
 {{ end }}
 
 
 {{ define "sidebar" }}
-{{ with .GetPage "/posts" }}
-{{ partial "tags/local/block.html" . }}
+{{ partial "tags/global/block.html" . }}
 {{ end }}
-{{ end }}
+

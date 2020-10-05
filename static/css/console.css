@@ -31,11 +31,11 @@
 }
 
 :root {
-    --global-font-size: 16px;
+    --global-font-size: 14px;
     --global-font-color: #444;
     --mono-font-stack: Roboto Mono, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
     --font-stack: Roboto Mono, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
-    --global-line-height: 1.6em;
+    --global-line-height: 1.4em;
     --page-width: 70em;
     --display-h1-decoration: 1;
     --code-bg-color: #fff;
