@@ -18,6 +18,36 @@
     --font-color: #444444;
 }
 
+.admonitionblock td.icon .icon-rfc::before {
+  content: "\e717";
+  color:black;
+}
+
+.admonitionblock td.icon .icon-note::before {
+  content: "\f24a";
+  color:black;
+}
+
+.admonitionblock td.icon .icon-tip::before {
+  content: "\f0c1";
+  color:black;
+}
+
+.admonitionblock td.icon .icon-warning::before {
+  content: "\f077";
+  color:black;
+}
+
+.admonitionblock td.icon .icon-caution::before {
+  content: "\f24a";
+  color:black;
+}
+
+.admonitionblock td.icon .icon-important::before {
+  content: "\f24a";
+  color:black;
+}
+
 .terminal-menu {
   width: auto;
 }
@@ -403,3 +433,4 @@ article {
   }
 
 }
+

@@ -27,25 +27,17 @@ languageCode = "en-us"
   home = ["HTML", "RSS" ]
 
 [markup]
-  [markup.highlight]
-    codeFences = false
-    guessSyntax = false
-    hl_Lines = ""
-    lineNoStart = 1
-    lineNos = false
-    lineNumbersInTable = false
-    noClasses = true
-    style = "monokailight"
-    tabWidth = 4
-
 [markup.asciidoctorext]
-  extensions = ["asciidoctor-html5s", "asciidoctor-rouge", "asciidoctor-diagram"]
+  extensions = ["asciidoctor-interdoc-reftext", "asciidoctor-rouge", "asciidoctor-diagram"]
   workingFolderCurrent = true
   [markup.asciidocext.attributes]
       my-base-url = "https://example.com/"
       my-attribute-name = "my value"
+      imagesdir = "/image"
       source-highlighter = "rouge"
       rouge-theme = "monokai"
+      icons = "font"
+
 #[deployment]
 
 #  [[deployment.targets]]
