@@ -1,0 +1,61 @@
+---
+title: EAP
+tags:
+ - networking
+ - auth
+ - wifi
+---
+
+[.dfn]*Extensible Authentication Protocol (EAP)* is an _layer 2_ authentication framework which supports multiple authentication methods, allowing for new authentication technologies to be compatible with layer 2 technologies.
+
+The original EAP ran over link:/ppp[PPP] however EAP encapsulation over LANs (link:/eapol[EAPOL]) was introduced to allow to use EAP over Ethernet (link:/ieee802[IEEE 802]) as well. In both of these solutions EAP runs over layer 2 data links and does not require IP.
+
+RFCs
+---
+rfc:3748[] :: Extensible Authentication Protocol (EAP)
+rfc:5216[] :: The EAP-TLS Authentication Protocol
+rfc:5247[] :: EAP Key Management Framework
+rfc:4017[] :: EAP Method Requirements for Wireless LANs
+---
+
+== EAP-TTLS
+
+_EAP-TTLS_ is an EAP method that encapsulates a TLS session, consisting of:
+
+- a handshake phase
+- a data phase
+
+NOTE:  EAP-TTLS offers (but does not require) mutual authentication. This can _greatly simplify the setup procedure_ since a certificate is not needed on every client. 
+
+During the handshake phase, the server is authenticated to the client (mutual authentication is available, but not typical)) using standard TLS procedures, and keying material is generated in order to create a cryptographically secure tunnel for information exchange in the subsequent data phase. 
+
+During the data phase, the client is authenticated to the server (or client and server are mutually authenticated) using an //arbitrary authentication mechanism// encapsulated within the secure tunnel. The encapsulated authentication mechanism may itself be EAP, or it may be another authentication protocol such as <<secplus/4/2#pap,PAP>>, <<secplus/4/2#chap,CHAP>>, <<secplus/4/2#mschap,MS-CHAP>>, or <<secplus/4/2#ms-chap2,MS-CHAP v2>>.
+
+INFO: Thus, EAP-TTLS allows legacy password-based authentication protocols to be used against existing authentication databases, while protecting the security of these legacy protocols against eavesdropping, man-in-the-middle, and other attacks.
+
+The data phase may also be used for additional, arbitrary data exchange.
+
+(The above text is largely copied from the rfc:5281[] abstract.)
+
+== PEAP
+
+__Protected EAP__ encapsulates EAP itself within a <<./secplus/2/6#TLS>> tunnel. The purpose of PEAP was to correct deficiencies in EAP; EAP assumed a protected communication channel, such as that provided by physical security, so facilities for protection of the EAP conversation were not provided. The protocol only specifies chaining multiple EAP mechanisms and not any specific method. Use of the EAP-MSCHAPv2 is the most commonly supported. PEAP is an alternative to <<secplus/4/3#802.1x>>, both of which encapsulate EAP in order to add security.
+
+PEAP was jointly developed by Cisco Systems, Microsoft, and RSA Security. PEAPv0 was the version included with Microsoft Windows XP.
+
+
+
+== EAP-FAST
+__Flexible Authentication via Secure Tunneling (EAP-FAST)__ is a protocol proposal by Cisco Systems as a replacement for LEAP. The protocol was designed to address the weaknesses of LEAP while preserving the "lightweight" implementation. EAP-FAST is defined in rfc:4851[].
+
+Use of server certificates is optional in EAP-FAST. EAP-FAST uses a __Protected Access Credential (PAC)__ to establish a TLS tunnel in which client credentials are verified. A PAC is similar to a secure cookie. It is stored locally on the host and act as a proof of a successful authentication.
+
+
+== EAP-TLS
+EAP-TLS provides for certificate-based mutual authentication of the client and the network using <<./secplus/2/6#tls,TLS>>. It relies on client-side certificates and server-side certificates to perform authentication and can be used to dynamically generate user-based and session-based WEP keys to secure subsequent communications between the WLAN client and the access point. 
+
+EAP-TLS is the original, standard wireless LAN EAP authentication protocol; it is still considered one of the most secure EAP standards available
+
+WARNING: One drawback of EAP-TLS is that certificates must be managed on both the client and server side. For a large WLAN installation, this could be a very cumbersome task.
+
+TIP: One drawback of EAP-TLS is that certificates must be managed on both the client and server side. For a large WLAN installation, this could be a very cumbersome task.

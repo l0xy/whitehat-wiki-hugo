@@ -1,0 +1,48 @@
+---
+title: DNS
+tags:
+- protocol
+- networking
+---
+
+- https://www.hackers-arise.com/single-post/2019/05/20/Network-Basics-for-Hackers-Domain-Name-Service-DNS-and-BIND-Theory-Vulnerabilities-and-Implementation[Network Basics for Hackers: Domain Name Service (DNS) and BIND. Theory, Vulnerabilities and Implemenation]
+
+
+- rfc:3833[] -  Threat Analysis of the Domain Name System (DNS)
+** "This note attempts to document some of the known threats to the DNS, and, in doing so, attempts to measure to what extent (if any) DNSSEC is a useful tool in defending against these threats."
+
+DNS uses ports TCP/53 & UDP/53.
+
+- [.term]*TCP/53* used for zone transfers between DNS servers for special manual queries, or when a response exceeds 512 bytes
+- [.term]*UDP/53* used for most typical DNS queries
+
+---
+== zone file
+- http://www.steves-internet-guide.com/dns-zones-explained[DNS Zones Exaplined]
+
+A [.term]*zone file* is the collection of resource records or details about a specific domain.
+
+
+== DNSSEC
+
+https://www.icann.org/resources/pages/dnssec-what-is-it-why-important-2019-03-05-en[DNSSEC: what is it and why is it important?] [icann.org]
+
+> DNSSEC was designed to protect the Internet from certain attacks, such as DNS cache poisoning. It is a set of extensions to DNS, which provide: a) origin authentication of DNS data, b) data integrity, and c) authenticated denial of existence.
+>
+> These mechanisms require changes to the DNS protocol. DNSSEC adds four new resource record types: Resource Record Signature (RRSIG), DNS Public Key (DNSKEY), Delegation Signer (DS), and Next Secure (NSEC). These new RRs are described in detail in rfc:4034[].
+>
+>It also adds two new DNS header flags: Checking Disabled (CD) and Authenticated Data (AD). In order to support the larger DNS message sizes that result from adding the DNSSEC RRs, DNSSEC also requires EDNS0 support (rfc:2671[]).
+>
+> Finally, DNSSEC requires support for the DNSSEC OK (DO) EDNS header bit (rfc:3225[]) so that a security-aware resolver can indicate in its queries that it wishes to receive DNSSEC RRs in response messages. By checking the signature, a DNS resolver is able to check if the information is identical (correct and complete) to the info on the authoritative DNS server.
+>
+> DNSSEC services protect against most of the threats to the Domain Name System. There are several distinct classes of threats to the Domain Name System, most of which are DNS-related instances of more general problems, but a few of which are specific to peculiarities of the DNS protocol.
+>
+> Note that DNSSEC does not provide confidentiality of data. Also, DNSSEC does not protect against DDoS Attacks.
+
+== DNS over HTTPS (DoH)
+
+- https://support.mozilla.org/en-US/kb/dns-over-https-doh-faqs[Mozilla's DoH FAQ]
+
+== DNS cache poisoning
+- http://unixwiz.net/techtips/iguide-kaminsky-dns-vuln.html[DNS cache poisoning - Steve Friedl's whitepaper]
+- http://www.mindofroot.com/2008/08/24/episode-63-dns-mess[DNS cache poisoning podcast w/ the guy who published the white paper (Steve Friedl)]

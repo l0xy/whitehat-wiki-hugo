@@ -1,0 +1,10 @@
+*.swp
+*.swo
+public
+*/_gen
+images/
+public/
+themes/
+tags
+.desk
+
